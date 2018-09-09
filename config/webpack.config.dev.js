@@ -185,7 +185,7 @@ module.exports = {
           },
           // SCSS, desu.
           {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: [
               require.resolve("style-loader"),
               {

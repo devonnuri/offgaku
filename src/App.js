@@ -1,10 +1,17 @@
 import React, { Component } from "react";
+import TopBar from "./components/TopBar/TopBar";
+import LyricsBox from "./components/LyricsBox/LyricsBox";
+import BottomBar from "./components/BottomBar/BottomBar";
+
+import "./styles/main.scss";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello Electron</h1>
+        <TopBar />
+        <LyricsBox />
+        <BottomBar />
       </div>
     );
   }
