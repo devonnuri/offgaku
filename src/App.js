@@ -8,7 +8,7 @@ import "./styles/main.scss";
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="container">
         <TopBar />
         <LyricsBox />
         <BottomBar />

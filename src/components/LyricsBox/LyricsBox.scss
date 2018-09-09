@@ -1,21 +1,27 @@
+@import "src/styles/variables.scss";
+
 .lyrics-box {
-  flex: 1;
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.3) 100%
   );
-  padding: 4rem 0;
-  margin: 0 3rem;
+  margin: 1rem 3rem;
+  padding: 1rem 0;
   border-radius: 10px;
+
+  @media screen and (max-width: $small) {
+    margin: 1rem 0;
+    border-radius: 0;
+  }
 
   .lyrics {
     color: white;
 
     font-family: "Mplus 1p", "Noto Sans CJK KR";
     font-weight: bold;
-    font-size: 2em;
+    font-size: calc(1.5vw + 1.5vh);
 
     ruby rt {
       color: #ddd;

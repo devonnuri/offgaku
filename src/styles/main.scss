@@ -1,11 +1,17 @@
 body {
-  display: flex;
+  margin: 0;
   height: 100%;
   min-height: 100vh;
-  flex-direction: column;
-  margin: 0;
 
   text-align: center;
+
+  .container,
+  #root {
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+  }
 
   background: #2193b0; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -19,22 +25,4 @@ body {
     #2193b0
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   overflow: hidden;
-}
-.long-shadow {
-  display: inline-block;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  padding: 25px;
-  border: none;
-  color: rgba(255, 255, 255, 1);
-  text-align: center;
-  -o-text-overflow: clip;
-  text-overflow: clip;
-  text-shadow: 3px 3px 0 #1c7d96, 4px 4px 0 #1c7d96, 5px 5px 0 #1c7d96,
-    6px 6px 0 #1c7d96, 7px 7px 0 #1c7d96, 8px 8px 0 #1c7d96, 9px 9px 0 #1c7d96,
-    10px 10px 0 #1c7d96, 11px 11px 0 #1c7d96, 12px 12px 0 #1c7d96,
-    13px 13px 0 #1c7d96, 14px 14px 0 #1c7d96, 15px 15px 0 #1c7d96,
-    16px 16px 0 #1c7d96, 17px 17px 0 #1c7d96, 18px 18px 0 #1c7d96,
-    19px 19px 0 #1c7d96, 20px 20px 0 #1c7d96;
 }

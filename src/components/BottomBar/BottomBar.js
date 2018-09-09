@@ -6,7 +6,7 @@ class BottomBar extends Component {
   render() {
     return (
       <div className="bottom-bar">
-        <div>Sparkling Daydream</div>
+        <span className="progress"> </span>
       </div>
     );
   }
