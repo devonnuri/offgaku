@@ -1,15 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import "./BottomBar.scss";
+import './BottomBar.scss';
 
-class BottomBar extends Component {
-  render() {
-    return (
-      <div className="bottom-bar">
-        <span className="progress"> </span>
-      </div>
-    );
-  }
-}
+const BottomBar = () => (
+  <div className="bottom-bar">
+    <span className="progress" />
+  </div>
+);
 
 export default BottomBar;
