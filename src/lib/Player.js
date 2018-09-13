@@ -4,7 +4,7 @@ class Player {
       playbackRate: 1,
       volume: 1,
       muted: false,
-      ...options
+      ...options,
     };
 
     this.audio = new Audio();
@@ -83,8 +83,8 @@ class Player {
 
   isThresholdReached() {
     if (
-      !this.durationThresholdReached &&
-      this.audio.currentTime >= this.audio.duration * this.threshold
+      !this.durationThresholdReached
+      && this.audio.currentTime >= this.audio.duration * this.threshold
     ) {
       this.durationThresholdReached = true;
     }
