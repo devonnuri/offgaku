@@ -22,6 +22,7 @@ const parseLyrics = lyrics => _.chain(lyrics.split('<br>'))
     return undefined;
   })
   .groupBy('time')
+  .toArray()
   .value();
 
 export const getLyrics = ({ artist, title }) => {
