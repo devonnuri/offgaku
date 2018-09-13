@@ -12,6 +12,7 @@
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/no-unused-state": "warn"
+    "react/no-unused-state": "warn",
+    "react/no-array-index-key": "off" 
   }
 }

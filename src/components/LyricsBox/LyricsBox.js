@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { parseXML } from '../../lib/XMLParser';
 import { getLyrics } from '../../lib/Lyrics';
 
 import './LyricsBox.scss';
 
 class LyricsBox extends Component {
-  state = { lyrics: '' };
+  state = { lyrics: {}, startTime: 0 };
 
   componentDidMount() {
     getLyrics({
       artist: 'ZAQ',
       title: 'Sparkling Daydream',
-    }).then((response) => {
-      this.setState({ lyrics: response.data });
-      const data = parseXML(response.data);
-      console.log(data);
+    }).then((lyrics) => {
+      console.log(lyrics);
+      this.setState({ lyrics, startTime: new Date().getTime() });
+
+      this.interval = setInterval(() => this.forceUpdate(), 100);
     });
   }
 
   render() {
-    const { lyrics } = this.state;
+    const { lyrics, startTime } = this.state;
 
     return (
       <div className="lyrics-box">
@@ -31,6 +31,13 @@ class LyricsBox extends Component {
         </div>
         <div className="lyrics">유메나라 타쿠상 미타</div>
         <div className="lyrics">꿈에서 실컷 봤지만</div> */}
+        {lyrics[0]
+          ? lyrics[0].map((line, index) => (
+            <div className="lyrics" key={`${line.time}:${index}`}>
+              {line.str}
+            </div>
+          ))
+          : '싱크 가사 로딩중...'}
       </div>
     );
   }

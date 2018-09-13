@@ -11,6 +11,11 @@
   padding: 1rem 0;
   border-radius: 10px;
 
+  color: #ccc;
+
+  font-weight: bold;
+  font-size: calc(1.5vw + 1.5vh);
+
   @media screen and (max-width: $small) {
     margin: 1rem 0;
     border-radius: 0;
@@ -18,9 +23,6 @@
 
   .lyrics {
     color: white;
-
-    font-weight: bold;
-    font-size: calc(1.5vw + 1.5vh);
 
     ruby rt {
       color: #ddd;
