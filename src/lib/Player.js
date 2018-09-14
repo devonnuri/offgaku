@@ -50,26 +50,26 @@ class Player {
     return this.audio.volume;
   }
 
-  getSrc() {
+  getSource() {
     return this.audio.src;
   }
 
-  setAudioVolume(volume) {
+  setVolume(volume) {
     this.audio.volume = volume;
   }
 
-  setAudioPlaybackRate(playbackRate) {
+  setPlaybackRate(playbackRate) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  setAudioSrc(src) {
+  setSource(src) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = src;
   }
 
-  setAudioCurrentTime(currentTime) {
+  setCurrentTime(currentTime) {
     this.audio.currentTime = currentTime;
   }
 
