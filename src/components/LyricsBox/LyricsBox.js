@@ -11,7 +11,7 @@ class LyricsBox extends Component {
       artist: 'ZAQ',
       title: 'Sparkling Daydream',
     }).then((lyrics) => {
-      this.setState({ ...this.state, lyrics, startTime: new Date().getTime() - 1000 });
+      this.setState({ ...this.state, lyrics, startTime: new Date().getTime() });
 
       this.interval = setInterval(() => this.updateLyrics(), 100);
     });

@@ -46,6 +46,10 @@ class Player {
     return this.audio.currentTime;
   }
 
+  getDuration() {
+    return this.audio.duration;
+  }
+
   getVolume() {
     return this.audio.volume;
   }
