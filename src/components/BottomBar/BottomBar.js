@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as playerActions from '../../store/modules/player';
 
 import './BottomBar.scss';
 
 class BottomBar extends Component {
+  state = {
+    isMouseHover: false,
+    isMouseClicked: false,
+  };
+
   componentDidMount() {
     const { player } = this.props;
 
@@ -46,9 +49,7 @@ class BottomBar extends Component {
 
     return (
       <div className="bottom-bar">
-        <div className="progress-bar" onClick={this.onProgressClick}>
-          <span className="progress-fill" style={{ width: `${(currentTime / duration) * 100}%` }} />
-        </div>
+        <progress value={currentTime / duration} max="1" onClick={this.onProgressClick} />
         <div className="control">
           <button type="button" onClick={this.onPrevClick}>
             Prev
