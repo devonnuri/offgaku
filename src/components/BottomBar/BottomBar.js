@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import './BottomBar.scss';
 
 class BottomBar extends Component {
-  state = {
-    isMouseHover: false,
-    isMouseClicked: false,
-  };
-
   componentDidMount() {
     const { player } = this.props;
 
