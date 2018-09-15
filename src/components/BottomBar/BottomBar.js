@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import './BottomBar.scss';
 
 class BottomBar extends Component {
+  state = {
+    prevSong: -1,
+  };
+
   componentDidMount() {
-    const { player } = this.props;
+    this.props.player.setVolume(0.04);
 
-    player.setSource('/audio/ZAQ - Sparkling Daydream.mp3');
-    player.setVolume(0.04);
-    player.play();
-
-    this.interval = setInterval(() => this.forceUpdate(), 100);
+    this.interval = setInterval(() => this.updateBar(), 100);
   }
 
   componentWillUnmount() {
@@ -38,6 +38,18 @@ class BottomBar extends Component {
 
   onNextClick = (e) => {};
 
+  updateBar = () => {
+    const currentSong = this.props.playlist[this.props.currentSong];
+    if (this.props.currentSong !== this.state.prevSong && currentSong) {
+      const { player } = this.props;
+      player.setSource(currentSong.filepath);
+      player.play();
+      this.setState({ ...this.state, prevSong: this.props.currentSong });
+    }
+
+    this.forceUpdate();
+  };
+
   render() {
     const currentTime = this.props.player.getCurrentTime();
     const duration = this.props.player.getDuration();
@@ -50,7 +62,7 @@ class BottomBar extends Component {
             Prev
           </button>
           <button type="button" onClick={this.onPlayClick}>
-            Play
+            {this.props.player.isPaused() ? 'Play' : 'Resume'}
           </button>
           <button type="button" onClick={this.onNextClick}>
             Next
@@ -62,6 +74,10 @@ class BottomBar extends Component {
 }
 
 export default connect(
-  ({ player }) => ({ player: player.player }),
+  ({ player, playlist: { playlist, currentSong } }) => ({
+    player: player.player,
+    playlist,
+    currentSong,
+  }),
   () => ({}),
 )(BottomBar);

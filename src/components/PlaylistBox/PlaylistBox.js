@@ -7,7 +7,12 @@ import './PlaylistBox.scss';
 
 class PlaylistBox extends Component {
   componentDidMount() {
-    this.props.addPlaylist({ title: 'Sparkling Daydream', artist: 'ZAQ', duration: '3:10' });
+    this.props.addPlaylist({
+      title: 'Sparkling Daydream',
+      artist: 'ZAQ',
+      duration: '3:10',
+      filepath: '/audio/ZAQ - Sparkling Daydream.mp3',
+    });
   }
 
   render() {

@@ -16,11 +16,16 @@ const initialState = {
 
 export default handleActions(
   {
-    [ADD_PLAYLIST]: (state, { payload: { title, artist, duration } }) => produce(state, (draft) => {
+    [ADD_PLAYLIST]: (state, {
+      payload: {
+        title, artist, duration, filepath,
+      },
+    }) => produce(state, (draft) => {
       draft.playlist.push({
         title,
         artist,
         duration,
+        filepath,
       });
     }),
     [REMOVE_PLAYLIST]: (state, { payload: { id } }) => produce(state, (draft) => {
