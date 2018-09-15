@@ -7,6 +7,18 @@ import './PlaylistBox.scss';
 
 class PlaylistBox extends Component {
   componentDidMount() {
+    this.props.player.ended(() => {
+      if (this.props.playlist.length > this.props.currentSong + 1) {
+        this.props.setCurrentSong({ id: this.props.currentSong + 1 });
+      }
+    });
+
+    this.props.addPlaylist({
+      title: 'Snow Halation',
+      artist: 'μ’s',
+      duration: '4:19',
+      filepath: '/audio/01. Snow halation.flac',
+    });
     this.props.addPlaylist({
       title: 'Sparkling Daydream',
       artist: 'ZAQ',
@@ -36,6 +48,10 @@ class PlaylistBox extends Component {
 }
 
 export default connect(
-  ({ playlist }) => ({ playlist: playlist.playlist }),
+  ({ player, playlist: { playlist, currentSong } }) => ({
+    player: player.player,
+    playlist,
+    currentSong,
+  }),
   dispatch => bindActionCreators(playlistActions, dispatch),
 )(PlaylistBox);

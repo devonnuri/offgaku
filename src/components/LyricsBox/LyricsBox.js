@@ -28,7 +28,7 @@ class LyricsBox extends Component {
     const currentSong = this.props.playlist[this.props.currentSong];
     if (this.props.currentSong !== this.state.prevSong && currentSong) {
       this.fetchLyrics(currentSong);
-      this.setState({ ...this.state, prevSong: currentSong });
+      this.setState({ ...this.state, prevSong: this.props.currentSong });
     }
 
     const { lyrics } = this.state;

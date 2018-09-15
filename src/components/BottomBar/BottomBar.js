@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as playlistActions from '../../store/modules/playlist';
 
 import './BottomBar.scss';
 
@@ -24,7 +26,9 @@ class BottomBar extends Component {
     this.props.player.setCurrentTime((cursorX / windowWidth) * this.props.player.getDuration());
   };
 
-  onPrevClick = (e) => {};
+  onPrevClick = () => {
+    this.props.setCurrentSong({ id: this.props.currentSong - 1 });
+  };
 
   onPlayClick = () => {
     const { player } = this.props;
@@ -36,7 +40,9 @@ class BottomBar extends Component {
     }
   };
 
-  onNextClick = (e) => {};
+  onNextClick = (e) => {
+    this.props.setCurrentSong({ id: this.props.currentSong + 1 });
+  };
 
   updateBar = () => {
     const currentSong = this.props.playlist[this.props.currentSong];
@@ -53,18 +59,27 @@ class BottomBar extends Component {
   render() {
     const currentTime = this.props.player.getCurrentTime();
     const duration = this.props.player.getDuration();
+    const { currentSong, playlist } = this.props;
 
     return (
       <div className="bottom-bar">
         <progress value={currentTime / duration} max="1" onClick={this.onProgressClick} />
         <div className="control">
-          <button type="button" onClick={this.onPrevClick}>
+          <button
+            type="button"
+            onClick={this.onPrevClick}
+            disabled={currentSong - 1 < 0 ? 'disabled' : null}
+          >
             Prev
           </button>
           <button type="button" onClick={this.onPlayClick}>
             {this.props.player.isPaused() ? 'Play' : 'Resume'}
           </button>
-          <button type="button" onClick={this.onNextClick}>
+          <button
+            type="button"
+            onClick={this.onNextClick}
+            disabled={currentSong + 1 >= playlist.length ? 'disabled' : null}
+          >
             Next
           </button>
         </div>
@@ -79,5 +94,5 @@ export default connect(
     playlist,
     currentSong,
   }),
-  () => ({}),
+  dispatch => bindActionCreators(playlistActions, dispatch),
 )(BottomBar);

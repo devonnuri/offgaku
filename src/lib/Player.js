@@ -95,6 +95,10 @@ class Player {
 
     return this.durationThresholdReached;
   }
+
+  ended(callback) {
+    this.audio.onended = callback;
+  }
 }
 
 export default Player;
