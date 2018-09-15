@@ -25,7 +25,6 @@
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
-    "immer": "^1.6.0",
     "jest": "20.0.4",
     "lodash": "^4.17.11",
     "object-assign": "4.1.1",
@@ -55,8 +54,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "electron-dev": "concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "build --em.main=build/electron.js",
-    "preelectron-pack": "yarn build"
+    "pack": "electron-builder --dir -c.extraMetadata.main=build/electron.js",
+    "dist": "electron-builder -c.extraMetadata.main=build/electron.js"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
@@ -73,7 +72,7 @@
     "wait-on": "^3.0.1"
   },
   "build": {
-    "appId": "com.example.electron-cra",
+    "appId": "com.devonnuri.offgaku",
     "files": [
       "build/**/*",
       "node_modules/**/*"

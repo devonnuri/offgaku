@@ -7,15 +7,11 @@ import './BottomBar.scss';
 
 class BottomBar extends Component {
   componentDidMount() {
-    const {
-      setSource, setVolume, play, player,
-    } = this.props;
+    const { player } = this.props;
 
-    setSource('/audio/ZAQ - Sparkling Daydream.mp3');
-    setVolume(0.07);
-    play();
-
-    console.log(player.getCurrentTime());
+    player.setSource('/audio/ZAQ - Sparkling Daydream.mp3');
+    player.setVolume(0.04);
+    player.play();
 
     this.interval = setInterval(() => this.forceUpdate(), 100);
   }
@@ -24,13 +20,46 @@ class BottomBar extends Component {
     clearInterval(this.interval);
   }
 
+  onProgressClick = (e) => {
+    const windowWidth = window.innerWidth;
+    const cursorX = e.clientX;
+    this.props.player.setCurrentTime((cursorX / windowWidth) * this.props.player.getDuration());
+  };
+
+  onPrevClick = (e) => {};
+
+  onPlayClick = () => {
+    const { player } = this.props;
+
+    if (player.isPaused()) {
+      player.play();
+    } else {
+      player.pause();
+    }
+  };
+
+  onNextClick = (e) => {};
+
   render() {
     const currentTime = this.props.player.getCurrentTime();
     const duration = this.props.player.getDuration();
 
     return (
       <div className="bottom-bar">
-        <span className="progress" style={{ width: `${(currentTime / duration) * 100}%` }} />
+        <div className="progress-bar" onClick={this.onProgressClick}>
+          <span className="progress-fill" style={{ width: `${(currentTime / duration) * 100}%` }} />
+        </div>
+        <div className="control">
+          <button type="button" onClick={this.onPrevClick}>
+            Prev
+          </button>
+          <button type="button" onClick={this.onPlayClick}>
+            Play
+          </button>
+          <button type="button" onClick={this.onNextClick}>
+            Next
+          </button>
+        </div>
       </div>
     );
   }
@@ -38,5 +67,5 @@ class BottomBar extends Component {
 
 export default connect(
   ({ player }) => ({ player: player.player }),
-  dispatch => bindActionCreators(playerActions, dispatch),
+  () => ({}),
 )(BottomBar);
