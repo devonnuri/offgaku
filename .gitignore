@@ -8,7 +8,10 @@
 
 # production
 /build
+<<<<<<< HEAD
 /dist
+=======
+>>>>>>> Copy previous code
 
 # misc
 .DS_Store
@@ -20,6 +23,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
 yarn.lock
 
 audio/
+=======
+>>>>>>> Copy previous code

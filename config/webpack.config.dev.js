@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
@@ -17,6 +18,29 @@ const publicPath = "/";
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = "";
+=======
+'use strict';
+
+const autoprefixer = require('autoprefixer');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const getClientEnvironment = require('./env');
+const paths = require('./paths');
+
+// Webpack uses `publicPath` to determine where the app is being served from.
+// In development, we always serve from the root. This makes config easier.
+const publicPath = '/';
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+const publicUrl = '';
+>>>>>>> Copy previous code
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -26,13 +50,21 @@ const env = getClientEnvironment(publicUrl);
 module.exports = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
+<<<<<<< HEAD
   devtool: "cheap-module-source-map",
+=======
+  devtool: 'cheap-module-source-map',
+>>>>>>> Copy previous code
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
     // We ship a few polyfills by default:
+<<<<<<< HEAD
     require.resolve("./polyfills"),
+=======
+    require.resolve('./polyfills'),
+>>>>>>> Copy previous code
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -43,9 +75,15 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
+<<<<<<< HEAD
     require.resolve("react-dev-utils/webpackHotDevClient"),
     // Finally, this is your app's code:
     paths.appIndexJs
+=======
+    require.resolve('react-dev-utils/webpackHotDevClient'),
+    // Finally, this is your app's code:
+    paths.appIndexJs,
+>>>>>>> Copy previous code
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -56,21 +94,35 @@ module.exports = {
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
+<<<<<<< HEAD
     filename: "static/js/bundle.js",
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: "static/js/[name].chunk.js",
+=======
+    filename: 'static/js/bundle.js',
+    // There are also additional JS chunk files if you use code splitting.
+    chunkFilename: 'static/js/[name].chunk.js',
+>>>>>>> Copy previous code
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
+<<<<<<< HEAD
       path.resolve(info.absoluteResourcePath).replace(/\\/g, "/")
+=======
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+>>>>>>> Copy previous code
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
+<<<<<<< HEAD
     modules: ["node_modules", paths.appNodeModules].concat(
+=======
+    modules: ['node_modules', paths.appNodeModules].concat(
+>>>>>>> Copy previous code
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -80,11 +132,20 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
+<<<<<<< HEAD
     extensions: [".web.js", ".mjs", ".js", ".json", ".web.jsx", ".jsx"],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       "react-native": "react-native-web"
+=======
+    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    alias: {
+      
+      // Support React Native Web
+      // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+      'react-native': 'react-native-web',
+>>>>>>> Copy previous code
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -92,8 +153,13 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
+<<<<<<< HEAD
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
     ]
+=======
+      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+    ],
+>>>>>>> Copy previous code
   },
   module: {
     strictExportPresence: true,
@@ -106,17 +172,31 @@ module.exports = {
       // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx|mjs)$/,
+<<<<<<< HEAD
         enforce: "pre",
+=======
+        enforce: 'pre',
+>>>>>>> Copy previous code
         use: [
           {
             options: {
               formatter: eslintFormatter,
+<<<<<<< HEAD
               eslintPath: require.resolve("eslint")
             },
             loader: require.resolve("eslint-loader")
           }
         ],
         include: paths.appSrc
+=======
+              eslintPath: require.resolve('eslint'),
+              
+            },
+            loader: require.resolve('eslint-loader'),
+          },
+        ],
+        include: paths.appSrc,
+>>>>>>> Copy previous code
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -128,16 +208,25 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+<<<<<<< HEAD
             loader: require.resolve("url-loader"),
             options: {
               limit: 10000,
               name: "static/media/[name].[hash:8].[ext]"
             }
+=======
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+>>>>>>> Copy previous code
           },
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
+<<<<<<< HEAD
             loader: require.resolve("babel-loader"),
             options: {
               // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -145,6 +234,16 @@ module.exports = {
               // directory for faster rebuilds.
               cacheDirectory: true
             }
+=======
+            loader: require.resolve('babel-loader'),
+            options: {
+              
+              // This is a feature of `babel-loader` for webpack (not Babel itself).
+              // It enables caching results in ./node_modules/.cache/babel-loader/
+              // directory for faster rebuilds.
+              cacheDirectory: true,
+            },
+>>>>>>> Copy previous code
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -154,6 +253,7 @@ module.exports = {
           {
             test: /\.css$/,
             use: [
+<<<<<<< HEAD
               require.resolve("style-loader"),
               {
                 loader: require.resolve("css-loader"),
@@ -182,6 +282,36 @@ module.exports = {
                 }
               }
             ]
+=======
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+            ],
+>>>>>>> Copy previous code
           },
           // SCSS, desu.
           {
@@ -230,6 +360,7 @@ module.exports = {
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
+<<<<<<< HEAD
             loader: require.resolve("file-loader"),
             options: {
               name: "static/media/[name].[hash:8].[ext]"
@@ -240,6 +371,18 @@ module.exports = {
       // ** STOP ** Are you adding a new loader?
       // Make sure to add the new loader(s) before the "file" loader.
     ]
+=======
+            loader: require.resolve('file-loader'),
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      },
+      // ** STOP ** Are you adding a new loader?
+      // Make sure to add the new loader(s) before the "file" loader.
+    ],
+>>>>>>> Copy previous code
   },
   plugins: [
     // Makes some environment variables available in index.html.
@@ -250,7 +393,11 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
+<<<<<<< HEAD
       template: paths.appHtml
+=======
+      template: paths.appHtml,
+>>>>>>> Copy previous code
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
@@ -273,21 +420,38 @@ module.exports = {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
+<<<<<<< HEAD
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+=======
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+>>>>>>> Copy previous code
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
+<<<<<<< HEAD
     dgram: "empty",
     fs: "empty",
     net: "empty",
     tls: "empty",
     child_process: "empty"
+=======
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+>>>>>>> Copy previous code
   },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become
   // cumbersome.
   performance: {
+<<<<<<< HEAD
     hints: false
   }
+=======
+    hints: false,
+  },
+>>>>>>> Copy previous code
 };
