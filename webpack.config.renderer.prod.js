@@ -42,10 +42,10 @@ export default merge.smart(baseConfig, {
             }
           },
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
+            // options: {
+            //   sourceMap: true
+            // }
           }
         ]
       },
@@ -57,12 +57,12 @@ export default merge.smart(baseConfig, {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-              sourceMap: true
-            }
+            loader: 'css-loader'
+            // options: {
+            //   modules: true,
+            //   localIdentName: '[name]__[local]__[hash:base64:5]'
+            //   // sourceMap: true
+            // }
           }
         ]
       },
@@ -74,17 +74,17 @@ export default merge.smart(baseConfig, {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              importLoaders: 1
-            }
+            loader: 'css-loader'
+            // options: {
+            //   // sourceMap: true,
+            //   importLoaders: 1
+            // }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'sass-loader'
+            // options: {
+            //   // sourceMap: true
+            // }
           }
         ]
       },
@@ -96,19 +96,19 @@ export default merge.smart(baseConfig, {
             loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-              sourceMap: true
-            }
+            loader: 'css-loader'
+            // options: {
+            //   modules: true,
+            //   importLoaders: 1,
+            //   localIdentName: '[name]__[local]__[hash:base64:5]'
+            //   // sourceMap: true
+            // }
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'sass-loader'
+            // options: {
+            //   sourceMap: true
+            // }
           }
         ]
       },

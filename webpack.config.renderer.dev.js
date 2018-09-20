@@ -84,10 +84,10 @@ export default merge.smart(baseConfig, {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
+            // options: {
+            //   sourceMap: true
+            // }
           }
         ]
       },
@@ -98,13 +98,13 @@ export default merge.smart(baseConfig, {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
+            loader: 'css-loader'
+            // options: {
+            //   modules: true,
+            //   sourceMap: true,
+            //   importLoaders: 1,
+            //   localIdentName: '[name]__[local]__[hash:base64:5]'
+            // }
           }
         ]
       },
@@ -116,10 +116,10 @@ export default merge.smart(baseConfig, {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'css-loader'
+            // options: {
+            //   sourceMap: true
+            // }
           },
           {
             loader: 'sass-loader'
@@ -134,13 +134,13 @@ export default merge.smart(baseConfig, {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
+            loader: 'css-loader'
+            // options: {
+            //   modules: true,
+            //   // sourceMap: true,
+            //   importLoaders: 1,
+            //   localIdentName: '[name]__[local]__[hash:base64:5]'
+            // }
           },
           {
             loader: 'sass-loader'

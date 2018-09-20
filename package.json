@@ -207,9 +207,11 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
+    "axios": "^0.18.0",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "history": "^4.7.2",
+    "immer": "^1.7.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.4",
@@ -218,8 +220,10 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^4.0.0",
+    "redux-actions": "^2.6.1",
     "redux-thunk": "^2.3.0",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.6",
+    "xml2js": "^0.4.19"
   },
   "devEngines": {
     "node": ">=7.x",

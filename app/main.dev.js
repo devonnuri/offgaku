@@ -61,6 +61,7 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
+    webPreferences: { webSecurity: false },
     show: false,
     width: 1024,
     height: 728

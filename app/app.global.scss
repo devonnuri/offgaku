@@ -1,0 +1,47 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+body {
+  margin: 0;
+  height: 100%;
+  min-height: 100vh;
+
+  font-family: 'Roboto', 'M PLUS Rounded 1c', 'Noto Sans CJK KR', sans-serif;
+
+  text-align: center;
+
+  .container,
+  #root {
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  overflow: hidden;
+
+  .background {
+    height: 110vh;
+    left: 0;
+    position: fixed;
+    right: 0;
+    background-image: url('/img/sparkling_daydream.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    filter: blur(5px) brightness(80%);
+    -webkit-filter: blur(5px) brightness(80%);
+    margin: -5px -10px -10px -5px;
+    z-index: -1;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
