@@ -1,10 +1,12 @@
+// @flow
+
 import axios from 'axios';
 import * as _ from 'lodash';
 import { parseXML } from './XMLParser';
 
 const ALSONG_URL = 'http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx';
 
-const parseLyrics = lyrics =>
+const parseLyrics = (lyrics: string) =>
   _.chain(lyrics.split('<br>'))
     .map(lyricLine => {
       const match = lyricLine.match(/\[([0-9]+):([0-9]+)\.([0-9]+)\]/);
@@ -26,20 +28,47 @@ const parseLyrics = lyrics =>
     .toArray()
     .value();
 
-export const getLyrics = ({ artist, title }) => {
-  const requestXML = `
+export const getLyrics = ({
+  artist,
+  title,
+  hash
+}: {
+  artist?: string,
+  title?: string,
+  hash?: string
+}) => {
+  let requestXML;
+  if (artist && title) {
+    requestXML = `
+<Envelope xmlns="http://www.w3.org/2003/05/soap-envelope">
+  <Body>
+    <GetResembleLyric2 xmlns="ALSongWebServer">
+      <stQuery>
+        <strTitle>${title}</strTitle>
+        <strArtistName>${artist}</strArtistName>
+      </stQuery>
+    </GetResembleLyric2>
+  </Body>
+</Envelope>
+    `.trim();
+  } else if (hash) {
+    requestXML = `
 <?xml version="1.0" encoding="UTF-8"?>
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope" xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="ALSongWebServer/Service1Soap" xmlns:ns1="ALSongWebServer" xmlns:ns3="ALSongWebServer/Service1Soap12">
-  <SOAP-ENV:Body>
-    <ns1:GetResembleLyric2>
-      <ns1:stQuery>
-        <ns1:strTitle>${title}</ns1:strTitle>
-        <ns1:strArtistName>${artist}</ns1:strArtistName>
-      </ns1:stQuery>
-    </ns1:GetResembleLyric2>
-  </SOAP-ENV:Body>
-</SOAP-ENV:Envelope>
-`.trim();
+<Envelope xmlns="http://www.w3.org/2003/05/soap-envelope">
+  <Body>
+    <GetLyric5 xmlns="ALSongWebServer">
+      <stQuery>
+        <strChecksum>${hash}</strChecksum>
+      </stQuery>
+    </GetLyric5>
+  </Body>
+</Envelope>
+    `.trim();
+
+    console.log(requestXML);
+  } else {
+    throw new Error('Should have artist, title or only hash in parameter.');
+  }
 
   return axios
     .post(ALSONG_URL, requestXML, {
@@ -58,5 +87,6 @@ export const getLyrics = ({ artist, title }) => {
         lyricsSet.sort((a, b) => b.strLyric.length - a.strLyric.length)[0]
           .strLyric[0]
     )
-    .then(lyrics => parseLyrics(lyrics));
+    .then(lyrics => parseLyrics(lyrics))
+    .catch(() => [[{ time: 0, str: '싱크 가사가 없습니다.' }]]);
 };

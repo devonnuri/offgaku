@@ -22,9 +22,9 @@ type State = {
 class LyricsBox extends Component<Props, State> {
   interval: IntervalID;
 
-  componentDidMount() {
-    this.state = { lyrics: [], currentLine: 0, prevSong: -1 };
+  state = { lyrics: [], currentLine: 0, prevSong: -1 };
 
+  componentDidMount() {
     this.interval = setInterval(() => this.updateLyrics(), 100);
   }
 
@@ -32,11 +32,16 @@ class LyricsBox extends Component<Props, State> {
     clearInterval(this.interval);
   }
 
-  fetchLyrics = ({ artist, title }) => {
-    getLyrics({
-      artist,
-      title
-    })
+  fetchLyrics = ({ artist, title, hash }) => {
+    let promise;
+
+    if (hash) {
+      promise = getLyrics({ hash });
+    } else {
+      promise = getLyrics({ artist, title });
+    }
+
+    promise
       .then(lyrics => this.setState({ ...this.state, lyrics }))
       .catch(error => {
         console.error(error);
@@ -68,7 +73,7 @@ class LyricsBox extends Component<Props, State> {
   render() {
     const { lyrics, currentLine } = this.state;
 
-    if (lyrics) {
+    if (lyrics && currentLine > -1) {
       return (
         <div className="lyrics-box">
           {lyrics[currentLine]

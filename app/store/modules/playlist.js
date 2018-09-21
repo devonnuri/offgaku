@@ -18,14 +18,15 @@ export default handleActions(
   {
     [ADD_PLAYLIST]: (
       state,
-      { payload: { title, artist, duration, filepath } }
+      { payload: { title, artist, duration, filepath, hash } }
     ) =>
       produce(state, draft => {
         draft.playlist.push({
           title,
           artist,
           duration,
-          filepath
+          filepath,
+          hash
         });
       }),
     [REMOVE_PLAYLIST]: (state, { payload: { id } }) =>

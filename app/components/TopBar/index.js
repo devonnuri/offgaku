@@ -25,7 +25,11 @@ class TopBar extends Component<Props> {
         </div>
       );
     }
-    return '';
+    return (
+      <div className="top-bar">
+        <div className="title">Offgaku</div>
+      </div>
+    );
   }
 }
 

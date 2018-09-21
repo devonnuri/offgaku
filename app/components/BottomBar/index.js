@@ -22,14 +22,14 @@ type State = {
 class BottomBar extends Component<Props, State> {
   interval: IntervalID;
 
+  state = {
+    prevSong: -1
+  };
+
   componentDidMount() {
     const { player } = this.props;
 
-    player.setVolume(0.04);
-
-    this.state = {
-      prevSong: -1
-    };
+    player.setVolume(0.02);
 
     this.interval = setInterval(() => this.updateBar(), 100);
   }
@@ -85,13 +85,16 @@ class BottomBar extends Component<Props, State> {
   render() {
     const { currentSong, playlist, player } = this.props;
 
-    const currentTime = player.getCurrentTime();
-    const duration = player.getDuration();
+    let progressValue = player.getCurrentTime() / player.getDuration();
+
+    if (!progressValue) {
+      progressValue = 0;
+    }
 
     return (
       <div className="bottom-bar">
         <progress
-          value={currentTime / duration}
+          value={progressValue}
           max="1"
           onClick={this.onProgressClick}
         />

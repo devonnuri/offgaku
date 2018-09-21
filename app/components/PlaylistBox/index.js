@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { remote } from 'electron';
+
+import checksum from '../../lib/Checksum';
 import * as playlistActions from '../../store/modules/playlist';
 import type PlayerType from '../../lib/Player';
 
@@ -16,40 +19,41 @@ type Props = {
     title: string,
     artist: string,
     duration: number,
-    filepath: string
+    filepath: string,
+    hash: string
   }) => void,
   setCurrentSong: (payload: { id: number }) => void
 };
 
 class PlaylistBox extends Component<Props> {
   componentDidMount() {
-    const {
-      player,
-      playlist,
-      currentSong,
-      addPlaylist,
-      setCurrentSong
-    } = this.props;
+    const { player, playlist, currentSong, setCurrentSong } = this.props;
 
     player.ended(() => {
       if (playlist.length > currentSong + 1) {
         setCurrentSong({ id: currentSong + 1 });
       }
     });
-
-    addPlaylist({
-      title: 'Snow Halation',
-      artist: 'μ’s',
-      duration: 259,
-      filepath: '/audio/01. Snow halation.flac'
-    });
-    addPlaylist({
-      title: 'Sparkling Daydream',
-      artist: 'ZAQ',
-      duration: 100,
-      filepath: '/audio/ZAQ - Sparkling Daydream.mp3'
-    });
   }
+
+  onAddClick = () => {
+    const { addPlaylist } = this.props;
+
+    const files = remote.dialog.showOpenDialog({
+      properties: ['openFile', 'multiSelections']
+    });
+
+    files.forEach(filepath => {
+      console.log(checksum(filepath));
+      addPlaylist({
+        title: 'asdf',
+        artist: 'asdf',
+        duration: 123,
+        filepath,
+        hash: checksum(filepath)
+      });
+    });
+  };
 
   render() {
     const { playlist } = this.props;
@@ -66,6 +70,11 @@ class PlaylistBox extends Component<Props> {
                 <td>{e.duration}</td>
               </tr>
             ))}
+            <tr className="add-song" onClick={this.onAddClick}>
+              <td colSpan={4}>
+                <i className="fas fa-plus" /> Add Song
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

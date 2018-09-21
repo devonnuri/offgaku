@@ -1,15 +1,25 @@
 // @flow
-import * as React from 'react';
+import React, { Component } from 'react';
 
-type Props = {
-  children: React.Node
-};
+import TopBar from '../components/TopBar';
+import LyricsBox from '../components/LyricsBox';
+import BottomBar from '../components/BottomBar';
+import PlaylistBox from '../components/PlaylistBox';
 
-export default class App extends React.Component<Props> {
+type Props = {};
+
+export default class HomePage extends Component<Props> {
   props: Props;
 
   render() {
-    const { children } = this.props;
-    return <React.Fragment>{children}</React.Fragment>;
+    return (
+      <div className="container">
+        <div className="background" />
+        <TopBar />
+        <PlaylistBox />
+        <LyricsBox />
+        <BottomBar />
+      </div>
+    );
   }
 }

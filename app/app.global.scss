@@ -24,23 +24,28 @@ body {
     left: 0;
     position: fixed;
     right: 0;
-    background-image: url('/img/sparkling_daydream.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: block;
-    filter: blur(5px) brightness(80%);
-    -webkit-filter: blur(5px) brightness(80%);
-    margin: -5px -10px -10px -5px;
+    // background-image: url('/img/sparkling_daydream.jpg');
+    // background-size: cover;
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // filter: blur(5px) brightness(80%);
+    // -webkit-filter: blur(5px) brightness(80%);
+    // margin: -5px -10px -10px -5px;
+    background: #2193b0; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #6dd5ed,
+      #2193b0
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
     z-index: -1;
   }
 }
-
 ::-webkit-scrollbar {
   width: 6px;
   background-color: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.25);
