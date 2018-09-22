@@ -2,8 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, type Dispatch } from 'redux';
 import { remote } from 'electron';
+import { basename } from 'path';
+import * as mm from 'music-metadata';
 
 import checksum from '../../lib/Checksum';
 import * as playlistActions from '../../store/modules/playlist';
@@ -36,6 +38,12 @@ class PlaylistBox extends Component<Props> {
     });
   }
 
+  onItemClick = id => {
+    const { setCurrentSong } = this.props;
+
+    setCurrentSong({ id });
+  };
+
   onAddClick = () => {
     const { addPlaylist } = this.props;
 
@@ -43,21 +51,24 @@ class PlaylistBox extends Component<Props> {
       properties: ['openFile', 'multiSelections']
     });
 
-    files.forEach(filepath => {
-      checksum(filepath)
-        .then(hash =>
-          addPlaylist({
-            title: 'asdf',
-            artist: 'asdf',
-            duration: 123,
-            filepath,
-            hash
-          })
-        )
-        .catch(error => {
-          throw error;
-        });
-    });
+    if (files) {
+      files.forEach(filepath => {
+        Promise.all([checksum(filepath), mm.parseFile(filepath)])
+          .then(([hash, metadata]) =>
+            addPlaylist({
+              title: basename(filepath),
+              artist: '',
+              duration: metadata.format.duration,
+              filepath,
+              hash,
+              picture: metadata.common.picture
+            })
+          )
+          .catch(error => {
+            throw error;
+          });
+      });
+    }
   };
 
   render() {
@@ -68,11 +79,19 @@ class PlaylistBox extends Component<Props> {
         <table>
           <tbody>
             {playlist.map((e, index) => (
-              <tr>
+              <tr
+                key={index}
+                onClick={() => {
+                  this.onItemClick(index);
+                }}
+              >
                 <td>{index + 1}</td>
                 <td>{e.title}</td>
                 <td>{e.artist}</td>
-                <td>{e.duration}</td>
+                <td>
+                  {String(Math.floor(e.duration / 60)).padStart(2, '0')}:
+                  {String(Math.floor(e.duration % 60)).padStart(2, '0')}
+                </td>
               </tr>
             ))}
             <tr className="add-song" onClick={this.onAddClick}>
@@ -93,5 +112,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: any) => bindActionCreators(playlistActions, dispatch)
+  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
 )(PlaylistBox);

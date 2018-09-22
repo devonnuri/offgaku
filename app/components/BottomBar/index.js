@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, type Dispatch } from 'redux';
 import * as playlistActions from '../../store/modules/playlist';
 import type PlayerType from '../../lib/Player';
 
@@ -128,5 +128,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: any) => bindActionCreators(playlistActions, dispatch)
+  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
 )(BottomBar);

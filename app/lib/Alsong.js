@@ -24,11 +24,12 @@ const parseLyrics = (lyrics: string) =>
       }
       return undefined;
     })
+    .filter(lyricLine => lyricLine)
     .groupBy('time')
     .toArray()
     .value();
 
-export const getLyrics = ({
+export const getInfo = ({
   artist,
   title,
   hash
@@ -67,8 +68,6 @@ export const getLyrics = ({
   </Body>
 </Envelope>
     `.trim();
-
-    console.log(requestXML);
   } else {
     throw new Error('Should have artist, title or only hash in parameter.');
   }
@@ -83,13 +82,24 @@ export const getLyrics = ({
     .then(data => {
       const body = data['soap:Envelope']['soap:Body'][0];
 
+      let result;
+
       if (body.GetLyric5Response) {
-        return body.GetLyric5Response[0].GetLyric5Result[0].strLyric[0];
+        result = body.GetLyric5Response[0].GetLyric5Result[0];
+      } else {
+        result = body.GetResembleLyric2Response[0].GetResembleLyric2Result[0].ST_GET_RESEMBLELYRIC2_RETURN.sort(
+          (a, b) => b.strLyric.length - a.strLyric.length
+        )[0];
       }
-      return body.GetResembleLyric2Response[0].GetResembleLyric2Result[0].ST_GET_RESEMBLELYRIC2_RETURN.sort(
-        (a, b) => b.strLyric.length - a.strLyric.length
-      )[0].strLyric[0];
+
+      result = {
+        title: result.strTitle[0],
+        artist: result.strArtist[0],
+        album: result.strAlbum[0],
+        lyrics: parseLyrics(result.strLyric[0])
+      };
+
+      return result;
     })
-    .then(lyrics => parseLyrics(lyrics))
-    .catch(err => [[{ time: 0, str: '싱크 가사가 없습니다.' }]]);
+    .catch(() => [[{ time: 0, str: '싱크 가사가 없습니다.' }]]);
 };

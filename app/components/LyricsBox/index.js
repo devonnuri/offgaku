@@ -2,15 +2,19 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getLyrics } from '../../lib/Lyrics';
+import { bindActionCreators, type Dispatch } from 'redux';
+import { getInfo } from '../../lib/Alsong';
 import type PlayerType from '../../lib/Player';
+
+import * as playlistActions from '../../store/modules/playlist';
 
 import './LyricsBox.scss';
 
 type Props = {
   player: PlayerType,
   playlist: Array<any>,
-  currentSong: number
+  currentSong: number,
+  editPlaylist: () => void
 };
 
 type State = {
@@ -32,17 +36,21 @@ class LyricsBox extends Component<Props, State> {
     clearInterval(this.interval);
   }
 
-  fetchLyrics = ({ artist, title, hash }) => {
+  fetchInfo = ({ artist, title, hash }) => {
+    const { editPlaylist, currentSong } = this.props;
     let promise;
 
     if (hash) {
-      promise = getLyrics({ hash });
+      promise = getInfo({ hash });
     } else {
-      promise = getLyrics({ artist, title });
+      promise = getInfo({ artist, title });
     }
 
     promise
-      .then(lyrics => this.setState({ ...this.state, lyrics }))
+      .then(({ title: songTitle, artist: songArtist, lyrics }) => {
+        editPlaylist({ id: currentSong, title: songTitle, artist: songArtist });
+        return this.setState({ ...this.state, lyrics });
+      })
       .catch(error => {
         console.error(error);
       });
@@ -54,7 +62,7 @@ class LyricsBox extends Component<Props, State> {
 
     const song = playlist[currentSong];
     if (currentSong !== prevSong && song) {
-      this.fetchLyrics(song);
+      this.fetchInfo(song);
       this.setState({ ...this.state, prevSong: currentSong });
     }
 
@@ -73,7 +81,7 @@ class LyricsBox extends Component<Props, State> {
   render() {
     const { lyrics, currentLine } = this.state;
 
-    if (lyrics && currentLine > -1) {
+    if (lyrics.length > 0 && currentLine > -1) {
       return (
         <div className="lyrics-box">
           {lyrics[currentLine]
@@ -101,5 +109,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  () => ({})
+  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
 )(LyricsBox);
