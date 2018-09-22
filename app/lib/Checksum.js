@@ -1,25 +1,20 @@
-import fs from 'fs';
+// @flow
+
+import { readFile } from 'await-file';
 import { createHash } from 'crypto';
+import NodeID3 from 'node-id3';
 
-const BUFFER_SIZE = 0x28000;
+const checksum = async (filename: string): Promise<string> =>
+  readFile(filename)
+    .then(data => {
+      const buffer = NodeID3.removeTagsFromBuffer(data);
 
-const checksum = filename => {
-  const fd = fs.openSync(filename, 'r');
-  const hash = createHash('md5');
-  const buffer = Buffer.alloc(BUFFER_SIZE);
-
-  try {
-    let bytesRead;
-
-    do {
-      bytesRead = fs.readSync(fd, buffer, 0, BUFFER_SIZE);
-      hash.update(buffer.slice(0, bytesRead));
-    } while (bytesRead === BUFFER_SIZE);
-  } finally {
-    fs.closeSync(fd);
-  }
-
-  return hash.digest('hex');
-};
+      return createHash('md5')
+        .update(buffer.slice(0, 0x28000))
+        .digest('hex');
+    })
+    .catch(error => {
+      throw error;
+    });
 
 export default checksum;

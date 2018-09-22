@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, session, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -59,6 +59,11 @@ app.on('ready', async () => {
   ) {
     await installExtensions();
   }
+
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'gSOAP';
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
+  });
 
   mainWindow = new BrowserWindow({
     webPreferences: { webSecurity: false },

@@ -9,12 +9,12 @@ import './LyricsBox.scss';
 
 type Props = {
   player: PlayerType,
-  playlist: [],
+  playlist: Array<any>,
   currentSong: number
 };
 
 type State = {
-  lyrics: [],
+  lyrics: Array<any>,
   currentLine: number,
   prevSong: number
 };

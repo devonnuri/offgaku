@@ -59,6 +59,9 @@ export const getLyrics = ({
     <GetLyric5 xmlns="ALSongWebServer">
       <stQuery>
         <strChecksum>${hash}</strChecksum>
+        <strVersion/>
+        <strMACAddress/>
+        <strIPAddress/>
       </stQuery>
     </GetLyric5>
   </Body>
@@ -77,16 +80,16 @@ export const getLyrics = ({
       }
     })
     .then(response => parseXML(response.data))
-    .then(
-      data =>
-        data['soap:Envelope']['soap:Body'][0].GetResembleLyric2Response[0]
-          .GetResembleLyric2Result[0].ST_GET_RESEMBLELYRIC2_RETURN
-    )
-    .then(
-      lyricsSet =>
-        lyricsSet.sort((a, b) => b.strLyric.length - a.strLyric.length)[0]
-          .strLyric[0]
-    )
+    .then(data => {
+      const body = data['soap:Envelope']['soap:Body'][0];
+
+      if (body.GetLyric5Response) {
+        return body.GetLyric5Response[0].GetLyric5Result[0].strLyric[0];
+      }
+      return body.GetResembleLyric2Response[0].GetResembleLyric2Result[0].ST_GET_RESEMBLELYRIC2_RETURN.sort(
+        (a, b) => b.strLyric.length - a.strLyric.length
+      )[0].strLyric[0];
+    })
     .then(lyrics => parseLyrics(lyrics))
-    .catch(() => [[{ time: 0, str: '싱크 가사가 없습니다.' }]]);
+    .catch(err => [[{ time: 0, str: '싱크 가사가 없습니다.' }]]);
 };

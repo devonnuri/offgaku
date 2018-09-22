@@ -44,14 +44,19 @@ class PlaylistBox extends Component<Props> {
     });
 
     files.forEach(filepath => {
-      console.log(checksum(filepath));
-      addPlaylist({
-        title: 'asdf',
-        artist: 'asdf',
-        duration: 123,
-        filepath,
-        hash: checksum(filepath)
-      });
+      checksum(filepath)
+        .then(hash =>
+          addPlaylist({
+            title: 'asdf',
+            artist: 'asdf',
+            duration: 123,
+            filepath,
+            hash
+          })
+        )
+        .catch(error => {
+          throw error;
+        });
     });
   };
 
