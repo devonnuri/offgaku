@@ -47,28 +47,31 @@ class PlaylistBox extends Component<Props> {
   onAddClick = () => {
     const { addPlaylist } = this.props;
 
-    const files = remote.dialog.showOpenDialog({
-      properties: ['openFile', 'multiSelections']
-    });
-
-    if (files) {
-      files.forEach(filepath => {
-        Promise.all([checksum(filepath), mm.parseFile(filepath)])
-          .then(([hash, metadata]) =>
-            addPlaylist({
-              title: basename(filepath),
-              artist: '',
-              duration: metadata.format.duration,
-              filepath,
-              hash,
-              picture: metadata.common.picture
-            })
-          )
-          .catch(error => {
-            throw error;
+    remote.dialog.showOpenDialog(
+      {
+        properties: ['openFile', 'multiSelections']
+      },
+      files => {
+        if (files) {
+          files.forEach(filepath => {
+            Promise.all([checksum(filepath), mm.parseFile(filepath)])
+              .then(([hash, metadata]) =>
+                addPlaylist({
+                  title: basename(filepath),
+                  artist: '',
+                  duration: metadata.format.duration,
+                  filepath,
+                  hash,
+                  picture: metadata.common.picture
+                })
+              )
+              .catch(error => {
+                throw error;
+              });
           });
-      });
-    }
+        }
+      }
+    );
   };
 
   render() {

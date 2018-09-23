@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, SyntheticInputEvent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, type Dispatch } from 'redux';
 import * as playlistActions from '../../store/modules/playlist';
@@ -16,20 +16,23 @@ type Props = {
 };
 
 type State = {
-  prevSong: number
+  prevSong: number,
+  volume: number
 };
 
 class BottomBar extends Component<Props, State> {
   interval: IntervalID;
 
   state = {
-    prevSong: -1
+    prevSong: -1,
+    volume: 50
   };
 
   componentDidMount() {
     const { player } = this.props;
+    const { volume } = this.state;
 
-    player.setVolume(0.02);
+    player.setVolume(volume / 100);
 
     this.interval = setInterval(() => this.updateBar(), 100);
   }
@@ -82,8 +85,17 @@ class BottomBar extends Component<Props, State> {
     this.forceUpdate();
   };
 
+  onVolumeChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    const { player } = this.props;
+    const { volume } = this.state;
+
+    this.setState({ ...this.state, volume: e.target.value });
+    player.setVolume(volume / 100);
+  };
+
   render() {
     const { currentSong, playlist, player } = this.props;
+    const { volume } = this.state;
 
     let progressValue = player.getCurrentTime() / player.getDuration();
 
@@ -98,6 +110,16 @@ class BottomBar extends Component<Props, State> {
           max="1"
           onClick={this.onProgressClick}
         />
+        <div className="volume-slider">
+          <input
+            type="range"
+            min={1}
+            max={100}
+            value={volume}
+            className="slider volume"
+            onChange={this.onVolumeChange}
+          />
+        </div>
         <div className="control">
           <button
             type="button"
