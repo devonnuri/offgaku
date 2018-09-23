@@ -8,7 +8,7 @@
     rgba(0, 0, 0, 0.3) 100%
   );
   margin: 1rem 3rem;
-  padding: 1rem 0;
+  padding: 2rem 0;
   border-radius: 10px;
 
   color: #ccc;
@@ -24,8 +24,17 @@
   .lyrics {
     color: white;
 
-    ruby rt {
-      color: #ddd;
+    ruby {
+      display: inline-flex;
+      flex-direction: column-reverse;
+
+      rb,
+      rt {
+        display: inline;
+        line-height: 0.5;
+
+        color: #ddd;
+      }
     }
   }
 }

@@ -3,9 +3,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, type Dispatch } from 'redux';
-import { getInfo } from '../../lib/Alsong';
-import type PlayerType from '../../lib/Player';
+import DOMPurify from 'dompurify';
 
+import { getInfo } from '../../lib/SongInfo';
+import type PlayerType from '../../lib/Player';
 import * as playlistActions from '../../store/modules/playlist';
 
 import './LyricsBox.scss';
@@ -14,7 +15,11 @@ type Props = {
   player: PlayerType,
   playlist: Array<any>,
   currentSong: number,
-  editPlaylist: () => void
+  editPlaylist: (payload: {
+    id?: number,
+    title?: string,
+    artist?: string
+  }) => void
 };
 
 type State = {
@@ -38,15 +43,8 @@ class LyricsBox extends Component<Props, State> {
 
   fetchInfo = ({ artist, title, hash }) => {
     const { editPlaylist, currentSong } = this.props;
-    let promise;
 
-    if (hash) {
-      promise = getInfo({ hash });
-    } else {
-      promise = getInfo({ artist, title });
-    }
-
-    promise
+    getInfo({ artist, title, hash })
       .then(({ title: songTitle, artist: songArtist, lyrics }) => {
         editPlaylist({ id: currentSong, title: songTitle, artist: songArtist });
         return this.setState({ ...this.state, lyrics });
@@ -88,9 +86,13 @@ class LyricsBox extends Component<Props, State> {
             ? lyrics[currentLine].map((line, index) => {
                 if (line) {
                   return (
-                    <div className="lyrics" key={`${line.time}:${index}`}>
-                      {line.str}
-                    </div>
+                    <div
+                      className="lyrics"
+                      key={`${line.time}:${index}`}
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(line.str)
+                      }}
+                    />
                   );
                 }
                 return '';

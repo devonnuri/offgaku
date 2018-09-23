@@ -65,10 +65,13 @@
     "no-unused-vars": "warn",
     "react/no-access-state-in-setstate": "off",
     "react/no-array-index-key": "off",
+    "react/no-danger": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "linebreak-style": ["error", "unix"],
-    "prefer-destructuring": ["warn", { "object": true, "array": false }]
+    "prefer-destructuring": ["warn", { "object": true, "array": false }],
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off"
   },
   "plugins": ["flowtype", "import", "promise", "compat", "react"],
   "settings": {

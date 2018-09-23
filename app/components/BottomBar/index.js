@@ -128,5 +128,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
+  (dispatch: Dispatch<any>) => bindActionCreators(playlistActions, dispatch)
 )(BottomBar);

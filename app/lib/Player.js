@@ -35,19 +35,19 @@ class Player {
     await this.audio.play();
   }
 
-  pause(): void {
+  pause() {
     this.audio.pause();
   }
 
-  stop(): void {
+  stop() {
     this.audio.pause();
   }
 
-  mute(): void {
+  mute() {
     this.audio.muted = true;
   }
 
-  unmute(): void {
+  unmute() {
     this.audio.muted = false;
   }
 
@@ -71,22 +71,22 @@ class Player {
     return this.audio.src;
   }
 
-  setVolume(volume: number): void {
+  setVolume(volume: number) {
     this.audio.volume = volume;
   }
 
-  setPlaybackRate(playbackRate: number): void {
+  setPlaybackRate(playbackRate: number) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  setSource(src: string): void {
+  setSource(src: string) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = src;
   }
 
-  setCurrentTime(currentTime: number): void {
+  setCurrentTime(currentTime: number) {
     this.audio.currentTime = currentTime;
   }
 
