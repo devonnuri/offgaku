@@ -24,6 +24,7 @@ type Props = {
     filepath: string,
     hash: string
   }) => void,
+  removePlaylist: (payload: { id: number }) => void,
   setCurrentSong: (payload: { id: number }) => void
 };
 
@@ -74,6 +75,12 @@ class PlaylistBox extends Component<Props> {
     );
   };
 
+  onDeleteClick = (e: SyntheticEvent<any>, id: number) => {
+    const { removePlaylist } = this.props;
+
+    removePlaylist({ id });
+  };
+
   render() {
     const { playlist } = this.props;
 
@@ -81,7 +88,7 @@ class PlaylistBox extends Component<Props> {
       <div className="playlist-box">
         <table>
           <tbody>
-            {playlist.map((e, index) => (
+            {playlist.map((item, index: number) => (
               <tr
                 key={index}
                 onClick={() => {
@@ -89,16 +96,23 @@ class PlaylistBox extends Component<Props> {
                 }}
               >
                 <td>{index + 1}</td>
-                <td>{e.title}</td>
-                <td>{e.artist}</td>
+                <td>{item.title}</td>
+                <td>{item.artist}</td>
                 <td>
-                  {String(Math.floor(e.duration / 60)).padStart(2, '0')}:
-                  {String(Math.floor(e.duration % 60)).padStart(2, '0')}
+                  {String(Math.floor(item.duration / 60)).padStart(2, '0')}:
+                  {String(Math.floor(item.duration % 60)).padStart(2, '0')}
+                </td>
+                <td
+                  onClick={(e: SyntheticEvent<any>) => {
+                    this.onDeleteClick(e, index);
+                  }}
+                >
+                  <i className="fas fa-times" />
                 </td>
               </tr>
             ))}
             <tr className="add-song" onClick={this.onAddClick}>
-              <td colSpan={4}>
+              <td colSpan={5}>
                 <i className="fas fa-plus" /> Add Song
               </td>
             </tr>
@@ -115,5 +129,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
+  (dispatch: Dispatch<any>) => bindActionCreators(playlistActions, dispatch)
 )(PlaylistBox);

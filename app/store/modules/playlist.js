@@ -39,11 +39,16 @@ export default handleActions(
       }),
     [REMOVE_PLAYLIST]: (state, { payload: { id } }) =>
       produce(state, draft => {
-        draft.playlist = draft.playlist.filter(e => e.id !== id);
+        draft.playlist = draft.playlist.filter((e, index) => index !== id);
       }),
     [EDIT_PLAYLIST]: (state, { payload: { id, title, artist } }) =>
       produce(state, draft => {
-        draft.playlist[id] = _.assign(draft.playlist[id], { title, artist });
+        if (title) {
+          draft.playlist[id].title = title;
+        }
+        if (artist) {
+          draft.playlist[id].artist = artist;
+        }
       }),
     [SET_CURRENT_SONG]: (state, { payload: { id } }) =>
       produce(state, draft => {

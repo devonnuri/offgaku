@@ -31,7 +31,7 @@ type State = {
 class LyricsBox extends Component<Props, State> {
   interval: IntervalID;
 
-  state = { lyrics: [], currentLine: 0, prevSong: -1 };
+  state = { lyrics: [], currentLine: -1, prevSong: -1 };
 
   componentDidMount() {
     this.interval = setInterval(() => this.updateLyrics(), 100);
@@ -46,7 +46,12 @@ class LyricsBox extends Component<Props, State> {
 
     getInfo({ artist, title, hash })
       .then(({ title: songTitle, artist: songArtist, lyrics }) => {
-        editPlaylist({ id: currentSong, title: songTitle, artist: songArtist });
+        if (songTitle) {
+          editPlaylist({ id: currentSong, title: songTitle });
+        }
+        if (songArtist) {
+          editPlaylist({ id: currentSong, artist: songArtist });
+        }
         return this.setState({ ...this.state, lyrics });
       })
       .catch(error => {
@@ -79,28 +84,32 @@ class LyricsBox extends Component<Props, State> {
   render() {
     const { lyrics, currentLine } = this.state;
 
-    if (lyrics.length > 0 && currentLine > -1) {
-      return (
-        <div className="lyrics-box">
-          {lyrics[currentLine]
-            ? lyrics[currentLine].map((line, index) => {
-                if (line) {
-                  return (
-                    <div
-                      className="lyrics"
-                      key={`${line.time}:${index}`}
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(line.str)
-                      }}
-                    />
-                  );
-                }
-                return '';
-              })
-            : '싱크 가사 로딩중...'}
-        </div>
-      );
+    if (lyrics.length > 0) {
+      if (currentLine > -1) {
+        return (
+          <div className="lyrics-box">
+            {lyrics[currentLine]
+              ? lyrics[currentLine].map((line, index) => {
+                  if (line) {
+                    return (
+                      <div
+                        className="lyrics"
+                        key={`${line.time}:${index}`}
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(line.str)
+                        }}
+                      />
+                    );
+                  }
+                  return '';
+                })
+              : '싱크 가사 로딩중...'}
+          </div>
+        );
+      }
+      return <div className="lyrics-box" />;
     }
+
     return '';
   }
 }
@@ -111,5 +120,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: Dispatch) => bindActionCreators(playlistActions, dispatch)
+  (dispatch: Dispatch<any>) => bindActionCreators(playlistActions, dispatch)
 )(LyricsBox);

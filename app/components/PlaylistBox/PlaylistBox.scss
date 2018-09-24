@@ -47,6 +47,14 @@
           width: 30%;
         }
 
+        &:nth-child(5) {
+          padding: 0 1rem;
+
+          &:hover {
+            color: #e26558;
+          }
+        }
+
         &:last-child {
           border-top-right-radius: 4px;
         }

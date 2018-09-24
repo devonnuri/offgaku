@@ -71,7 +71,8 @@
     "linebreak-style": ["error", "unix"],
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
     "no-restricted-syntax": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "no-underscore-dangle": "off"
   },
   "plugins": ["flowtype", "import", "promise", "compat", "react"],
   "settings": {
