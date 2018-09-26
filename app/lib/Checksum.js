@@ -1,10 +1,8 @@
-// @flow
-
 import { readFile } from 'await-file';
 import { createHash } from 'crypto';
 import NodeID3 from 'node-id3';
 
-const checksum = async (filename: string): Promise<string> =>
+const checksum = async filename =>
   readFile(filename)
     .then(data => {
       const buffer = NodeID3.removeTagsFromBuffer(data);

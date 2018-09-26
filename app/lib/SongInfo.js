@@ -1,5 +1,3 @@
-// @flow
-
 import axios from 'axios';
 import * as _ from 'lodash';
 import Kuroshiro from 'kuroshiro';

@@ -1,28 +1,11 @@
-// @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, type Dispatch } from 'redux';
+import { bindActionCreators } from 'redux';
 import * as playlistActions from '../../store/modules/playlist';
-import type PlayerType from '../../lib/Player';
 
 import './BottomBar.scss';
 
-type Props = {
-  player: PlayerType,
-  currentSong: number,
-  playlist: [],
-  setCurrentSong: (payload: { id: number }) => void
-};
-
-type State = {
-  prevSong: number,
-  volume: number
-};
-
-class BottomBar extends Component<Props, State> {
-  interval: IntervalID;
-
+class BottomBar extends Component {
   state = {
     prevSong: -1,
     volume: 50
@@ -85,7 +68,7 @@ class BottomBar extends Component<Props, State> {
     this.forceUpdate();
   };
 
-  onVolumeChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  onVolumeChange = e => {
     const { player } = this.props;
 
     this.setState({ ...this.state, volume: e.target.value });
@@ -148,5 +131,5 @@ export default connect(
     playlist,
     currentSong
   }),
-  (dispatch: Dispatch<any>) => bindActionCreators(playlistActions, dispatch)
+  dispatch => bindActionCreators(playlistActions, dispatch)
 )(BottomBar);

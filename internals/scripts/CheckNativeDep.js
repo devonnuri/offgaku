@@ -1,4 +1,4 @@
-// @flow
+
 import fs from 'fs';
 import chalk from 'chalk';
 import { execSync } from 'child_process';

@@ -1,8 +1,5 @@
-// @flow
-
 import { createAction, handleActions } from 'redux-actions';
 import produce from 'immer';
-import * as _ from 'lodash';
 
 const ADD_PLAYLIST = 'playlist/ADD';
 const REMOVE_PLAYLIST = 'playlist/REMOVE';

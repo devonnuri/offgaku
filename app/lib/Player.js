@@ -1,19 +1,6 @@
-// @flow
-declare function Audio(src?: string): HTMLAudioElement;
-
 class Player {
-  audio: HTMLAudioElement;
-
-  threshold: number;
-
-  durationThresholdReached: boolean;
-
-  constructor(options: any) {
-    const mergedOptions: {
-      playbackRate: number,
-      volume: number,
-      muted: boolean
-    } = {
+  constructor(options) {
+    const mergedOptions = {
       playbackRate: 1,
       volume: 1,
       muted: false,
@@ -31,7 +18,7 @@ class Player {
     this.durationThresholdReached = false;
   }
 
-  async play(): Promise<any> {
+  async play() {
     await this.audio.play();
   }
 
@@ -51,54 +38,54 @@ class Player {
     this.audio.muted = false;
   }
 
-  getAudio(): HTMLAudioElement {
+  getAudio() {
     return this.audio;
   }
 
-  getCurrentTime(): number {
+  getCurrentTime() {
     return this.audio.currentTime;
   }
 
-  getDuration(): number {
+  getDuration() {
     return this.audio.duration;
   }
 
-  getVolume(): number {
+  getVolume() {
     return this.audio.volume;
   }
 
-  getSource(): string {
+  getSource() {
     return this.audio.src;
   }
 
-  setVolume(volume: number) {
+  setVolume(volume) {
     this.audio.volume = volume;
   }
 
-  setPlaybackRate(playbackRate: number) {
+  setPlaybackRate(playbackRate) {
     this.audio.playbackRate = playbackRate;
     this.audio.defaultPlaybackRate = playbackRate;
   }
 
-  setSource(src: string) {
+  setSource(src) {
     // When we change song, need to update the thresholdReached indicator.
     this.durationThresholdReached = false;
     this.audio.src = src;
   }
 
-  setCurrentTime(currentTime: number) {
+  setCurrentTime(currentTime) {
     this.audio.currentTime = currentTime;
   }
 
-  isMuted(): boolean {
+  isMuted() {
     return this.audio.muted;
   }
 
-  isPaused(): boolean {
+  isPaused() {
     return this.audio.paused;
   }
 
-  isThresholdReached(): boolean {
+  isThresholdReached() {
     if (
       !this.durationThresholdReached &&
       this.audio.currentTime >= this.audio.duration * this.threshold
@@ -109,7 +96,7 @@ class Player {
     return this.durationThresholdReached;
   }
 
-  ended(callback: () => void) {
+  ended(callback) {
     this.audio.onended = callback;
   }
 }

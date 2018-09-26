@@ -26,5 +26,6 @@
     "test/**/__snapshots__": true,
     "yarn.lock": true
   },
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "editor.fontFamily": "Fira Code, monospace"
 }

@@ -1,36 +1,14 @@
-// @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, type Dispatch } from 'redux';
 import DOMPurify from 'dompurify';
 
 import { getInfo } from '../../lib/SongInfo';
-import type PlayerType from '../../lib/Player';
 import * as playlistActions from '../../store/modules/playlist';
 
 import './LyricsBox.scss';
 
-type Props = {
-  player: PlayerType,
-  playlist: Array<any>,
-  currentSong: number,
-  editPlaylist: (payload: {
-    id?: number,
-    title?: string,
-    artist?: string
-  }) => void
-};
-
-type State = {
-  lyrics: Array<any>,
-  currentLine: number,
-  prevSong: number
-};
-
-class LyricsBox extends Component<Props, State> {
-  interval: IntervalID;
-
+class LyricsBox extends Component {
   state = { lyrics: [], currentLine: -1, prevSong: -1 };
 
   componentDidMount() {

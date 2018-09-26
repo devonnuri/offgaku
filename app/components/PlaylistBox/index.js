@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, type Dispatch } from 'redux';
@@ -9,26 +7,10 @@ import * as mm from 'music-metadata';
 
 import checksum from '../../lib/Checksum';
 import * as playlistActions from '../../store/modules/playlist';
-import type PlayerType from '../../lib/Player';
 
 import './PlaylistBox.scss';
 
-type Props = {
-  player: PlayerType,
-  playlist: [],
-  currentSong: number,
-  addPlaylist: (payload: {
-    title: string,
-    artist: string,
-    duration: number,
-    filepath: string,
-    hash: string
-  }) => void,
-  removePlaylist: (payload: { id: number }) => void,
-  setCurrentSong: (payload: { id: number }) => void
-};
-
-class PlaylistBox extends Component<Props> {
+class PlaylistBox extends Component {
   componentDidMount() {
     const { player, playlist, currentSong, setCurrentSong } = this.props;
 
@@ -75,7 +57,7 @@ class PlaylistBox extends Component<Props> {
     );
   };
 
-  onDeleteClick = (e: SyntheticEvent<any>, id: number) => {
+  onDeleteClick = (e, id) => {
     const { removePlaylist } = this.props;
 
     removePlaylist({ id });
@@ -88,7 +70,7 @@ class PlaylistBox extends Component<Props> {
       <div className="playlist-box">
         <table>
           <tbody>
-            {playlist.map((item, index: number) => (
+            {playlist.map((item, index) => (
               <tr
                 key={index}
                 onClick={() => {
@@ -103,7 +85,7 @@ class PlaylistBox extends Component<Props> {
                   {String(Math.floor(item.duration % 60)).padStart(2, '0')}
                 </td>
                 <td
-                  onClick={(e: SyntheticEvent<any>) => {
+                  onClick={e => {
                     this.onDeleteClick(e, index);
                   }}
                 >

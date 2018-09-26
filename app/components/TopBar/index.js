@@ -1,16 +1,9 @@
-// @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './TopBar.scss';
 
-type Props = {
-  playlist: [],
-  currentSong: number
-};
-
-class TopBar extends Component<Props> {
+class TopBar extends Component {
   componentDidMount() {}
 
   render() {
