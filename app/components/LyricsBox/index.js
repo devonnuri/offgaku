@@ -23,15 +23,9 @@ class LyricsBox extends Component {
     const { editPlaylist, currentSong } = this.props;
 
     getInfo({ artist, title, hash })
-      .then(({ title: songTitle, artist: songArtist, lyrics }) => {
-        if (songTitle) {
-          editPlaylist({ id: currentSong, title: songTitle });
-        }
-        if (songArtist) {
-          editPlaylist({ id: currentSong, artist: songArtist });
-        }
-        return this.setState({ ...this.state, lyrics });
-      })
+      .then(({ title: songTitle, artist: songArtist, lyrics }) =>
+        this.setState({ ...this.state, lyrics })
+      )
       .catch(error => {
         console.error(error);
       });

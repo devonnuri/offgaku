@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, type Dispatch } from 'redux';
 import { remote } from 'electron';
-import { basename } from 'path';
+import { parse } from 'path';
 import * as mm from 'music-metadata';
 
 import checksum from '../../lib/Checksum';
@@ -38,16 +38,21 @@ class PlaylistBox extends Component {
         if (files) {
           files.forEach(filepath => {
             Promise.all([checksum(filepath), mm.parseFile(filepath)])
-              .then(([hash, metadata]) =>
-                addPlaylist({
-                  title: basename(filepath),
-                  artist: '',
+              .then(([hash, metadata]) => {
+                console.log(metadata);
+
+                const { album, artist, title, picture } = metadata.common;
+
+                return addPlaylist({
+                  title: title || parse(filepath).name,
+                  artist: artist || '',
+                  album: album || '',
                   duration: metadata.format.duration,
                   filepath,
                   hash,
-                  picture: metadata.common.picture
-                })
-              )
+                  picture
+                });
+              })
               .catch(error => {
                 throw error;
               });
@@ -64,7 +69,7 @@ class PlaylistBox extends Component {
   };
 
   render() {
-    const { playlist } = this.props;
+    const { playlist, currentSong } = this.props;
 
     return (
       <div className="playlist-box">
@@ -76,6 +81,7 @@ class PlaylistBox extends Component {
                 onClick={() => {
                   this.onItemClick(index);
                 }}
+                className={currentSong === index ? 'playing' : null}
               >
                 <td>{index + 1}</td>
                 <td>{item.title}</td>

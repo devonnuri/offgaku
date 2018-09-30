@@ -32,6 +32,7 @@ const parseLyrics = (lyrics: string) =>
       return undefined;
     })
     .filter(lyricLine => lyricLine)
+    .sortBy([lyricLine => lyricLine.time])
     .groupBy('time')
     .toArray()
     .value();

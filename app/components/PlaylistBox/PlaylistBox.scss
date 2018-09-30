@@ -65,6 +65,10 @@
         border-bottom: 2px solid rgba(255, 255, 255, 0.7);
       }
 
+      &.playing {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+
       &:hover {
         background-color: rgba(0, 0, 0, 0.1);
       }

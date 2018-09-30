@@ -23,12 +23,13 @@ export default handleActions(
   {
     [ADD_PLAYLIST]: (
       state,
-      { payload: { title, artist, duration, filepath, hash } }
+      { payload: { title, artist, album, duration, filepath, hash } }
     ) =>
       produce(state, draft => {
         draft.playlist.push({
           title,
           artist,
+          album,
           duration,
           filepath,
           hash
@@ -37,6 +38,10 @@ export default handleActions(
     [REMOVE_PLAYLIST]: (state, { payload: { id } }) =>
       produce(state, draft => {
         draft.playlist = draft.playlist.filter((e, index) => index !== id);
+
+        if (draft.currentSong < id) {
+          draft.currentSong -= 1;
+        }
       }),
     [EDIT_PLAYLIST]: (state, { payload: { id, title, artist } }) =>
       produce(state, draft => {

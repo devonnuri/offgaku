@@ -1,6 +1,8 @@
 @import 'app/styles/variables.scss';
 
 .bottom-bar {
+  flex: none;
+  height: 8rem;
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.1) 0%,
@@ -76,7 +78,7 @@
     padding: 1rem 0;
 
     color: white;
-    font-size: calc(1.5vw + 1.5vh);
+    font-size: 1.5em;
     font-weight: white;
 
     button {
