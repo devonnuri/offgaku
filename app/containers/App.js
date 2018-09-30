@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 
+import Background from '../components/Background';
 import TopBar from '../components/TopBar';
 import LyricsBox from '../components/LyricsBox';
 import BottomBar from '../components/BottomBar';
 import PlaylistBox from '../components/PlaylistBox';
 
-type Props = {};
-
-export default class HomePage extends Component<Props> {
-  props: Props;
-
+class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="background" />
+        <Background />
         <TopBar />
         <PlaylistBox />
         <LyricsBox />
@@ -22,3 +19,5 @@ export default class HomePage extends Component<Props> {
     );
   }
 }
+
+export default App;

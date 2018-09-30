@@ -39,8 +39,6 @@ class PlaylistBox extends Component {
           files.forEach(filepath => {
             Promise.all([checksum(filepath), mm.parseFile(filepath)])
               .then(([hash, metadata]) => {
-                console.log(metadata);
-
                 const { album, artist, title, picture } = metadata.common;
 
                 return addPlaylist({

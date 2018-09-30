@@ -23,13 +23,14 @@ export default handleActions(
   {
     [ADD_PLAYLIST]: (
       state,
-      { payload: { title, artist, album, duration, filepath, hash } }
+      { payload: { title, artist, album, picture, duration, filepath, hash } }
     ) =>
       produce(state, draft => {
         draft.playlist.push({
           title,
           artist,
           album,
+          picture,
           duration,
           filepath,
           hash
@@ -39,7 +40,7 @@ export default handleActions(
       produce(state, draft => {
         draft.playlist = draft.playlist.filter((e, index) => index !== id);
 
-        if (draft.currentSong < id) {
+        if (id < draft.currentSong) {
           draft.currentSong -= 1;
         }
       }),
